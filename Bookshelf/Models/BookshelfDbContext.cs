@@ -17,5 +17,34 @@ namespace Bookshelf.Models
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.UserId);
+
+            modelBuilder.Entity<Book>()
+                .HasKey(b => b.BookId);
+
+            modelBuilder.Entity<Cart>()
+                .HasKey(c => c.CartId);
+
+            modelBuilder.Entity<Order>()
+                .HasKey(o => o.OrderId);
+
+            modelBuilder.Entity<Transaction>()
+                .HasKey(t => t.TransactionId);
+
+            modelBuilder.Entity<BookCategoryMapping>()
+                .HasKey(bcm => bcm.MappingId);
+
+            modelBuilder.Entity<BookReview>()
+                .HasKey(br => br.ReviewId);
+
+            modelBuilder.Entity<BookCategory>()
+                .HasKey(c => c.CategoryId);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
