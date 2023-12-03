@@ -10,7 +10,6 @@ namespace Bookshelf.Models
 
         [Required]
         [MaxLength(50)]
-        [Index(IsUnique = true)]
         public string CategoryName { get; set; }
     }
 }
