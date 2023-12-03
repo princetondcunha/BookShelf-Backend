@@ -60,6 +60,8 @@ namespace Bookshelf.Migrations
 
                     b.HasKey("BookId");
 
+                    b.HasIndex("SellerId");
+
                     b.ToTable("Books");
                 });
 
@@ -174,6 +176,10 @@ namespace Bookshelf.Migrations
 
                     b.HasKey("MappingId");
 
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("BookCategoryMappings");
                 });
 
@@ -203,6 +209,10 @@ namespace Bookshelf.Migrations
 
                     b.HasKey("ReviewId");
 
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("ReviewerId");
+
                     b.ToTable("BookReviews");
                 });
 
@@ -225,6 +235,10 @@ namespace Bookshelf.Migrations
 
                     b.HasKey("CartId");
 
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("Carts");
                 });
 
@@ -236,6 +250,9 @@ namespace Bookshelf.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
+                    b.Property<int?>("BookId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -246,6 +263,10 @@ namespace Bookshelf.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -284,6 +305,14 @@ namespace Bookshelf.Migrations
 
                     b.HasKey("TransactionId");
 
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("BuyerId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("SellerId");
+
                     b.ToTable("Transactions");
                 });
 
@@ -321,6 +350,162 @@ namespace Bookshelf.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.Book", b =>
+                {
+                    b.HasOne("Bookshelf.Models.User", "Seller")
+                        .WithMany("SellingBooks")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Seller");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.BookCategoryMapping", b =>
+                {
+                    b.HasOne("Bookshelf.Models.Book", "Book")
+                        .WithMany("Categories")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Bookshelf.Models.BookCategory", "Category")
+                        .WithMany("Books")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.BookReview", b =>
+                {
+                    b.HasOne("Bookshelf.Models.Book", "Book")
+                        .WithMany("Reviews")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Bookshelf.Models.User", "Reviewer")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ReviewerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Reviewer");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.Cart", b =>
+                {
+                    b.HasOne("Bookshelf.Models.Book", "Book")
+                        .WithMany("CartItems")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Bookshelf.Models.User", "User")
+                        .WithMany("CartItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.Order", b =>
+                {
+                    b.HasOne("Bookshelf.Models.Book", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("BookId");
+
+                    b.HasOne("Bookshelf.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.Transaction", b =>
+                {
+                    b.HasOne("Bookshelf.Models.Book", "Book")
+                        .WithMany("Transactions")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Bookshelf.Models.User", "Buyer")
+                        .WithMany("BuyerTransactions")
+                        .HasForeignKey("BuyerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Bookshelf.Models.Order", "Order")
+                        .WithMany("Transactions")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Bookshelf.Models.User", "Seller")
+                        .WithMany("SellerTransactions")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Buyer");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Seller");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.Book", b =>
+                {
+                    b.Navigation("CartItems");
+
+                    b.Navigation("Categories");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.BookCategory", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.Order", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.User", b =>
+                {
+                    b.Navigation("BuyerTransactions");
+
+                    b.Navigation("CartItems");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("SellerTransactions");
+
+                    b.Navigation("SellingBooks");
                 });
 #pragma warning restore 612, 618
         }

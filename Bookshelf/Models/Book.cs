@@ -24,6 +24,13 @@ namespace Bookshelf.Models
         public int SellerId { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public User Seller { get; set; }
+        public ICollection<Cart> CartItems { get; set; }
+        public ICollection<Order> Orders { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
+        public ICollection<BookReview> Reviews { get; set; }
+        public ICollection<BookCategoryMapping> Categories { get; set; }
     }
 
 }

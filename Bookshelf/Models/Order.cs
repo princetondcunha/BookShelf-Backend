@@ -12,5 +12,8 @@ namespace Bookshelf.Models
         [Column(TypeName = "decimal(10, 2)")]
         public decimal TotalAmount { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
+
+        public User User { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }

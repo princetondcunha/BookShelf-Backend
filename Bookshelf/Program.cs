@@ -1,22 +1,37 @@
 using Bookshelf.Models;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace Bookshelf
+DotNetEnv.Env.Load();
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<BookshelfDbContext>(options =>
+    options.UseSqlServer($"Server={Env.GetString("DB_SERVER")};Database={Env.GetString("DB_DATABASE")};User Id={Env.GetString("DB_USER")};Password={Env.GetString("DB_PASSWORD")};TrustServerCertificate=True;"));
+
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            DotNetEnv.Env.Load();
-            var builder = WebApplication.CreateBuilder(args);
-
-            builder.Services.AddRazorPages();
-            builder.Services.AddDbContext<BookshelfDbContext>(options =>
-                options.UseSqlServer($"Server={Env.GetString("DB_SERVER")};Database={Env.GetString("DB_DATABASE")};User Id={Env.GetString("DB_USER")};Password={Env.GetString("DB_PASSWORD")};TrustServerCertificate=True;"));
-
-            var app = builder.Build();
-        }
-    }
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
