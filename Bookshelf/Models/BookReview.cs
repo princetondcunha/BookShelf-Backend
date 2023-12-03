@@ -1,7 +1,10 @@
-﻿namespace Bookshelf.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Bookshelf.Models
 {
     public class BookReview
     {
+        [Key]
         public int ReviewId { get; set; }
         public int ReviewerId { get; set; }
         public int BookId { get; set; }
