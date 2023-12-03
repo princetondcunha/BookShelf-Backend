@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookshelf.Migrations
 {
     [DbContext(typeof(BookshelfDbContext))]
-    [Migration("20231203181512_AddModels")]
-    partial class AddModels
+    [Migration("20231203225106_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,28 +35,31 @@ namespace Bookshelf.Migrations
 
                     b.Property<string>("Author")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Condition")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Genre")
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(10, 2)");
 
                     b.Property<int>("SellerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("BookId");
 
@@ -73,11 +76,89 @@ namespace Bookshelf.Migrations
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("CategoryId");
 
                     b.ToTable("BookCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryName = "Fiction"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryName = "Non-Fiction"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            CategoryName = "Science Fiction"
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            CategoryName = "Mystery"
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            CategoryName = "Romance"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            CategoryName = "Fantasy"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            CategoryName = "Biography"
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            CategoryName = "Self-Help"
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            CategoryName = "History"
+                        },
+                        new
+                        {
+                            CategoryId = 10,
+                            CategoryName = "Thriller"
+                        },
+                        new
+                        {
+                            CategoryId = 11,
+                            CategoryName = "Children"
+                        },
+                        new
+                        {
+                            CategoryId = 12,
+                            CategoryName = "Science"
+                        },
+                        new
+                        {
+                            CategoryId = 13,
+                            CategoryName = "Art and Photography"
+                        },
+                        new
+                        {
+                            CategoryId = 14,
+                            CategoryName = "Cooking"
+                        },
+                        new
+                        {
+                            CategoryId = 15,
+                            CategoryName = "Poetry"
+                        });
                 });
 
             modelBuilder.Entity("Bookshelf.Models.BookCategoryMapping", b =>
@@ -162,7 +243,7 @@ namespace Bookshelf.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(10, 2)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -187,19 +268,19 @@ namespace Bookshelf.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("DeliveryCharge")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(8, 2)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("PlatformFee")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(8, 2)");
 
                     b.Property<int>("SellerId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(10, 2)");
 
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime2");
@@ -222,19 +303,23 @@ namespace Bookshelf.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("UserId");
 

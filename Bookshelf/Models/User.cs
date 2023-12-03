@@ -14,12 +14,10 @@ namespace Bookshelf.Models
         
         [Required]
         [MaxLength(50)]
-        [Index(IsUnique = true)]
         public string Username { get; set; }
 
         [Required]
         [MaxLength(50)]
-        [Index(IsUnique = true)]
         [EmailAddress]
         public string Email { get; set; }
         
