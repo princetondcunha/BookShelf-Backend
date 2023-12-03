@@ -62,6 +62,78 @@ namespace Bookshelf.Models
                 new BookCategory { CategoryId = 15, CategoryName = "Poetry" }
             );
 
+            modelBuilder.Entity<Book>()
+                .HasOne(b => b.Seller)
+                .WithMany(u => u.SellingBooks)
+                .HasForeignKey(b => b.SellerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Cart>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.CartItems)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Cart>()
+                .HasOne(c => c.Book)
+                .WithMany(b => b.CartItems)
+                .HasForeignKey(c => c.BookId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Order)
+                .WithMany(o => o.Transactions)
+                .HasForeignKey(t => t.OrderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Book)
+                .WithMany(b => b.Transactions)
+                .HasForeignKey(t => t.BookId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Buyer)
+                .WithMany(u => u.BuyerTransactions)
+                .HasForeignKey(t => t.BuyerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Seller)
+                .WithMany(u => u.SellerTransactions)
+                .HasForeignKey(t => t.SellerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<BookCategoryMapping>()
+                .HasOne(bcm => bcm.Book)
+                .WithMany(b => b.Categories)
+                .HasForeignKey(bcm => bcm.BookId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<BookCategoryMapping>()
+                .HasOne(bcm => bcm.Category)
+                .WithMany(c => c.Books)
+                .HasForeignKey(bcm => bcm.CategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<BookReview>()
+                .HasOne(br => br.Reviewer)
+                .WithMany(u => u.Reviews)
+                .HasForeignKey(br => br.ReviewerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<BookReview>()
+                .HasOne(br => br.Book)
+                .WithMany(b => b.Reviews)
+                .HasForeignKey(br => br.BookId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             base.OnModelCreating(modelBuilder);
         }
     }

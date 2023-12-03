@@ -21,5 +21,10 @@ namespace Bookshelf.Models
 
         [Column(TypeName = "decimal(8, 2)")]
         public decimal PlatformFee { get; set; }
+
+        public Order Order { get; set; }
+        public Book Book { get; set; }
+        public User Buyer { get; set; }
+        public User Seller { get; set; }
     }
 }

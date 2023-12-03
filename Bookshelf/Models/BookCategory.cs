@@ -11,5 +11,7 @@ namespace Bookshelf.Models
         [Required]
         [MaxLength(50)]
         public string CategoryName { get; set; }
+
+        public ICollection<BookCategoryMapping> Books { get; set; }
     }
 }
