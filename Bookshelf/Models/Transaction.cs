@@ -6,6 +6,7 @@ namespace Bookshelf.Models
     public class Transaction
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransactionId { get; set; }
         public int OrderId { get; set; }
         public int BookId { get; set; }
