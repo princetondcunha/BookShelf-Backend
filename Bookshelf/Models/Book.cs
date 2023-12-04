@@ -6,6 +6,7 @@ namespace Bookshelf.Models
     public class Book
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookId { get; set; }
 
         [Required]

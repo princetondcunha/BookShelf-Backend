@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bookshelf.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace Bookshelf.Models
+namespace Bookshelf.Data
 {
     public class BookshelfDbContext : DbContext
     {
@@ -43,6 +44,18 @@ namespace Bookshelf.Models
 
             modelBuilder.Entity<BookCategory>()
                 .HasKey(c => c.CategoryId);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<BookCategory>()
+                .HasIndex(b => b.CategoryName)
+                .IsUnique();
 
             modelBuilder.Entity<BookCategory>().HasData(
                 new BookCategory { CategoryId = 1, CategoryName = "Fiction" },

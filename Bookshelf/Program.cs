@@ -1,4 +1,4 @@
-using Bookshelf.Models;
+using Bookshelf.Data;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 
