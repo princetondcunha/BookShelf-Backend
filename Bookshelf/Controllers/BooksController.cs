@@ -28,7 +28,18 @@ namespace Bookshelf.Controllers
                 item.Author,
                 item.Condition,
                 item.Price,
-                item.ImageUrl
+                item.ImageUrl,
+                Categories = _context.BookCategoryMappings
+                .Where(mapping => mapping.BookId == item.BookId)
+                .Select(mapping => new
+                {
+                    mapping.CategoryId,
+                    CategoryName = _context.BookCategories
+                        .Where(category => category.CategoryId == mapping.CategoryId)
+                        .Select(category => category.CategoryName)
+                        .FirstOrDefault()
+                })
+                .ToList()
             })
             .ToList();
 
@@ -50,7 +61,18 @@ namespace Bookshelf.Controllers
                 item.Condition,
                 item.Price,
                 item.ImageUrl,
-                item.CreatedAt
+                item.CreatedAt,
+                Categories = _context.BookCategoryMappings
+                .Where(mapping => mapping.BookId == item.BookId)
+                .Select(mapping => new
+                {
+                    mapping.CategoryId,
+                    CategoryName = _context.BookCategories
+                        .Where(category => category.CategoryId == mapping.CategoryId)
+                        .Select(category => category.CategoryName)
+                        .FirstOrDefault()
+                })
+                .ToList()
             })
             .FirstOrDefault();
 
@@ -62,7 +84,8 @@ namespace Bookshelf.Controllers
             return Ok(data);
         }
 
-        // NOT FINISHED - TO BE ANALYZED ON THE DB SIDE
+        //NOT FINISHED - RESPONSE TO BE RESTRUCTURED
+
         [HttpPost]
         public IActionResult Create([FromBody] Book newBook)
         {
