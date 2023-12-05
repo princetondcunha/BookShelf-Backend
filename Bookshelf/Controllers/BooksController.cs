@@ -26,20 +26,10 @@ namespace Bookshelf.Controllers
                 item.BookId,
                 item.Title,
                 item.Author,
+                item.CategoryName,
                 item.Condition,
                 item.Price,
-                item.ImageUrl,
-                Categories = _context.BookCategoryMappings
-                .Where(mapping => mapping.BookId == item.BookId)
-                .Select(mapping => new
-                {
-                    mapping.CategoryId,
-                    CategoryName = _context.BookCategories
-                        .Where(category => category.CategoryId == mapping.CategoryId)
-                        .Select(category => category.CategoryName)
-                        .FirstOrDefault()
-                })
-                .ToList()
+                item.ImageUrl                
             })
             .ToList();
 
@@ -57,22 +47,12 @@ namespace Bookshelf.Controllers
                 item.BookId,
                 item.Title,
                 item.Description,
+                item.CategoryName,
                 item.Author,
                 item.Condition,
                 item.Price,
                 item.ImageUrl,
-                item.CreatedAt,
-                Categories = _context.BookCategoryMappings
-                .Where(mapping => mapping.BookId == item.BookId)
-                .Select(mapping => new
-                {
-                    mapping.CategoryId,
-                    CategoryName = _context.BookCategories
-                        .Where(category => category.CategoryId == mapping.CategoryId)
-                        .Select(category => category.CategoryName)
-                        .FirstOrDefault()
-                })
-                .ToList()
+                item.CreatedAt
             })
             .FirstOrDefault();
 
@@ -84,8 +64,6 @@ namespace Bookshelf.Controllers
             return Ok(data);
         }
 
-        //NOT FINISHED - RESPONSE TO BE RESTRUCTURED
-
         [HttpPost]
         public IActionResult Create([FromBody] Book newBook)
         {
@@ -94,7 +72,29 @@ namespace Bookshelf.Controllers
                 _context.Books.Add(newBook);
                 _context.SaveChanges();
 
-                return CreatedAtAction("Get", new { id = newBook.BookId }, newBook);
+                var createdBook = _context.Books
+                    .Where(item => item.BookId == newBook.BookId)
+                    .Select(item => new
+                    {
+                        item.BookId,
+                        item.Title,
+                        item.Description,
+                        item.CategoryName,
+                        item.Author,
+                        item.Condition,
+                        item.Price,
+                        item.SellerId,
+                        item.ImageUrl,
+                        item.CreatedAt
+                    })
+                    .FirstOrDefault();
+
+                if (createdBook == null)
+                {
+                    return NotFound();
+                }
+
+                return CreatedAtAction("Get", new { id = newBook.BookId }, createdBook);
             }
             catch (Exception ex)
             {
