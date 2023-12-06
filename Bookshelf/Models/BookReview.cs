@@ -14,7 +14,7 @@ namespace Bookshelf.Models
         public string ReviewText { get; set; }
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
-        public User Reviewer { get; set; }
-        public Book Book { get; set; }
+        public User? Reviewer { get; set; }
+        public Book? Book { get; set; }
     }
 }

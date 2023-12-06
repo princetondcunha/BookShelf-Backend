@@ -12,7 +12,7 @@ namespace Bookshelf.Models
         public int BookId { get; set; }
         public DateTime AddedAt { get; set; } = DateTime.UtcNow;
 
-        public User User { get; set; }
-        public Book Book { get; set; }
+        public User? User { get; set; }
+        public Book? Book { get; set; }
     }
 }
