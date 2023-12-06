@@ -32,39 +32,17 @@ namespace Bookshelf.Controllers
                 })
                 .ToList();
 
-            if (data == null)
-            {
-                return NotFound();
-            }
-
             return Ok(data);
         }
 
         [HttpPost]
-        public IActionResult AddReview([FromBody] BookReview review)
+        public IActionResult AddReview([FromBody] BookReview newReview)
         {
-            // Validate the input model
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            // Assuming ReviewModel has properties like ReviewerId, BookId, Rating, ReviewText, Timestamp
-            var newReview = new BookReview
-            {
-                ReviewerId = review.ReviewerId,
-                BookId = review.BookId,
-                Rating = review.Rating,
-                ReviewText = review.ReviewText,
-                Timestamp = DateTime.Now // You can adjust the timestamp based on your needs
-            };
-
-            // Add the new review to the context and save changes
-            _context.BookReviews.Add(review);
+            _context.BookReviews.Add(newReview);
             _context.SaveChanges();
 
             var createdReview = _context.BookReviews
-                .Where(item => item.ReviewId == review.ReviewId)
+                .Where(item => item.ReviewId == newReview.ReviewId)
                     .Select(item => new
                     {
                         item.ReviewId,
@@ -76,9 +54,7 @@ namespace Bookshelf.Controllers
                     })
                     .FirstOrDefault();
 
-            return CreatedAtAction("Get", new { id = review.BookId }, createdReview);
+            return CreatedAtAction("Get", new { id = newReview.BookId }, createdReview);
         }
-
-
     }
 }
