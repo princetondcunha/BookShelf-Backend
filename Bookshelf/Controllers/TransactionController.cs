@@ -39,5 +39,23 @@ namespace Bookshelf.Controllers
 
             return CreatedAtAction("Get", new { id = newTransaction.TransactionId }, createdTransaction);
         }
+
+        [HttpGet("getOrders")]
+        public IActionResult GetAll(int buyerId)
+        {
+            var data = _context.Transactions
+                .Where(item => item.BuyerId == buyerId)
+                .Select(item => new
+                {
+                    item.TransactionId,
+                    item.BuyerId,
+                    item.BookId,
+                    item.TransactionDate,
+                    TotalAmount = item.TotalAmount+item.DeliveryCharge+item.PlatformFee
+                })
+                .ToList();
+
+            return Ok(data);
+        }
     }
 }
