@@ -16,7 +16,7 @@ namespace Bookshelf.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public IActionResult AddTransaction([FromBody] Transaction newTransaction)
         {
             _context.Transactions.Add(newTransaction);
