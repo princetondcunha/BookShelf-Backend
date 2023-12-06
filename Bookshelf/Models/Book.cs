@@ -33,7 +33,6 @@ namespace Bookshelf.Models
 
         public User? Seller { get; set; }
         public ICollection<Cart>? CartItems { get; set; }
-        public ICollection<Order>? Orders { get; set; }
         public ICollection<Transaction>? Transactions { get; set; }
         public ICollection<BookReview>? Reviews { get; set; }
     }
