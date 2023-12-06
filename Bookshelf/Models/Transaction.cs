@@ -8,7 +8,6 @@ namespace Bookshelf.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransactionId { get; set; }
-        public int OrderId { get; set; }
         public int BookId { get; set; }
         public int BuyerId { get; set; }
         public int SellerId { get; set; }
@@ -22,8 +21,6 @@ namespace Bookshelf.Models
 
         [Column(TypeName = "decimal(8, 2)")]
         public decimal PlatformFee { get; set; } = 5;
-
-        public Order? Order { get; set; }
         public Book? Book { get; set; }
         public User? Buyer { get; set; }
         public User? Seller { get; set; }

@@ -8,7 +8,6 @@ namespace Bookshelf.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Cart> Carts { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<BookReview> BookReviews { get; set; }
 
@@ -27,9 +26,6 @@ namespace Bookshelf.Data
 
             modelBuilder.Entity<Cart>()
                 .HasKey(c => c.CartId);
-
-            modelBuilder.Entity<Order>()
-                .HasKey(o => o.OrderId);
 
             modelBuilder.Entity<Transaction>()
                 .HasKey(t => t.TransactionId);
@@ -61,18 +57,6 @@ namespace Bookshelf.Data
                 .HasOne(c => c.Book)
                 .WithMany(b => b.CartItems)
                 .HasForeignKey(c => c.BookId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.User)
-                .WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.Order)
-                .WithMany(o => o.Transactions)
-                .HasForeignKey(t => t.OrderId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Transaction>()

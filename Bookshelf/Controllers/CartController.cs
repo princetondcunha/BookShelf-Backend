@@ -16,7 +16,7 @@ namespace Bookshelf.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        [HttpPost("addItem")]
         public IActionResult AddCartItem([FromBody] Cart newCartItem)
         {
             _context.Carts.Add(newCartItem);
@@ -36,7 +36,7 @@ namespace Bookshelf.Controllers
             return CreatedAtAction("Get", new { id = newCartItem.CartId }, addedCartItem);
         }
 
-        [HttpGet]
+        [HttpGet("getItem")]
         public IActionResult GetAll(int userId)
         {
             var data = _context.Carts

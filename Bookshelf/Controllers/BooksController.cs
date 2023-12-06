@@ -16,7 +16,7 @@ namespace Bookshelf.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public IActionResult GetAll()
         {
 
@@ -36,12 +36,12 @@ namespace Bookshelf.Controllers
             return Ok(data);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet]
+        public IActionResult Get(int bookId)
         {
 
             var data = _context.Books
-            .Where(item => item.BookId == id)
+            .Where(item => item.BookId == bookId)
             .Select(item => new
             {
                 item.BookId,
