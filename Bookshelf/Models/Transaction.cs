@@ -17,7 +17,7 @@ namespace Bookshelf.Models
         public decimal TotalAmount { get; set; }
 
         [Column(TypeName = "decimal(8, 2)")]
-        public decimal DeliveryCharge { get; set; }
+        public decimal DeliveryCharge { get; set; } = 3;
 
         [Column(TypeName = "decimal(8, 2)")]
         public decimal PlatformFee { get; set; } = 5;
