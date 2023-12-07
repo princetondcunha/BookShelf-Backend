@@ -12,8 +12,12 @@ namespace Bookshelf.Models
         
         [Required]
         [MaxLength(20)]
-        public string Name { get; set; }
-        
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string LastName { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string Username { get; set; }
@@ -28,11 +32,11 @@ namespace Bookshelf.Models
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public ICollection<Book> SellingBooks { get; set; }
-        public ICollection<Cart> CartItems { get; set; }
-        public ICollection<Transaction> BuyerTransactions { get; set; }
-        public ICollection<Transaction> SellerTransactions { get; set; }
-        public ICollection<BookReview> Reviews { get; set; }
-        public ICollection<Address> Addresses { get; set; }
+        public ICollection<Book>? SellingBooks { get; set; }
+        public ICollection<Cart>? CartItems { get; set; }
+        public ICollection<Transaction>? BuyerTransactions { get; set; }
+        public ICollection<Transaction>? SellerTransactions { get; set; }
+        public ICollection<BookReview>? Reviews { get; set; }
+        public ICollection<Address>? Addresses { get; set; }
     }
 }

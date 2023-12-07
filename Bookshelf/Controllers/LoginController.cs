@@ -39,47 +39,6 @@ namespace Bookshelf.Controllers
         }
 
         //code for register and login
-        [HttpPost("register")]
-        public IActionResult Register([FromBody] UserRegisterRequest userRegisterRequest)
-        {
-            try
-            {
-                // Validate the request
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                // Check if the username or email already exists
-                if (_context.Users.Any(u => u.Username == userRegisterRequest.Username))
-                {
-                    return BadRequest("Username already exists.");
-                }
-
-                if (_context.Users.Any(u => u.Email == userRegisterRequest.Email))
-                {
-                    return BadRequest("Email address already exists.");
-                }
-
-                // Create a new user
-                var newUser = new User
-                {
-                    Name = userRegisterRequest.Name,
-                    Username = userRegisterRequest.Username,
-                    Password = userRegisterRequest.Password,
-                    Email = userRegisterRequest.Email
-                };
-                // Add the user to the database
-                _context.Users.Add(newUser);
-                _context.SaveChanges();
-
-                return Ok("Registration successful.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
-            }
-        }
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest loginRequest)
