@@ -9,9 +9,7 @@ namespace Bookshelf.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-
         private readonly BookshelfDbContext _context;
-
         public LoginController(BookshelfDbContext context)
         {
             _context = context;
@@ -20,7 +18,6 @@ namespace Bookshelf.Controllers
         [HttpPost]
         public IActionResult Authenticate([FromBody] LoginRequest model)
         {
-            // Replace this with your actual authentication logic
             if (IsValidUser(model.Username, model.Password))
             {
                 return Ok(new { message = "Password accepted" });
@@ -69,11 +66,9 @@ namespace Bookshelf.Controllers
                 {
                     Name = userRegisterRequest.Name,
                     Username = userRegisterRequest.Username,
-                    Password = userRegisterRequest.Password, // You should hash the password in a real-world scenario
+                    Password = userRegisterRequest.Password,
                     Email = userRegisterRequest.Email
-                    // Add other properties as needed
                 };
-
                 // Add the user to the database
                 _context.Users.Add(newUser);
                 _context.SaveChanges();
@@ -106,10 +101,6 @@ namespace Bookshelf.Controllers
                 {
                     return BadRequest("Invalid username or password.");
                 }
-
-                // You may want to implement token-based authentication here in a production scenario
-                // For simplicity, let's just return a success message in this example
-
                 return Ok($"Login successful for user: {user.Username}");
             }
             catch (Exception ex)
