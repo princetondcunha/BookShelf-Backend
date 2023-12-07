@@ -29,6 +29,7 @@ namespace Bookshelf.Models
         public decimal Price { get; set; }
         public int SellerId { get; set; }
         public string ImageUrl { get; set; }
+        public bool IsSold { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public User? Seller { get; set; }
         public ICollection<Cart>? CartItems { get; set; }
