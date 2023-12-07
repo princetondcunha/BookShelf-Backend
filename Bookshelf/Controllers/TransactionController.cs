@@ -19,7 +19,15 @@ namespace Bookshelf.Controllers
         [HttpPost("create")]
         public IActionResult AddTransaction([FromBody] Transaction newTransaction)
         {
+            var book = _context.Books
+                .FirstOrDefault(b => b.BookId == newTransaction.BookId);
+
+            Console.WriteLine("TRACE: ", book);
+
+            var sellerId = book.SellerId;
+            newTransaction.SellerId = sellerId;
             _context.Transactions.Add(newTransaction);
+            book.IsSold = true;
             _context.SaveChanges();
 
             var createdTransaction = _context.Transactions

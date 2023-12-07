@@ -25,15 +25,41 @@ namespace Bookshelf.Controllers
             {
                 item.BookId,
                 item.Title,
-                item.Author,
+                item.Description,
                 item.CategoryName,
+                item.Author,
                 item.Condition,
                 item.Price,
-                item.ImageUrl                
+                item.ImageUrl,
+                item.CreatedAt,
+                item.IsSold
             })
             .ToList();
 
             return Ok(data);
+        }
+
+        [HttpGet("activeListing")]
+        public IActionResult GetUnsoldBooks()
+        {
+            var unsoldBooks = _context.Books
+                .Where(book => !book.IsSold)
+                .Select(item => new
+                {
+                    item.BookId,
+                    item.Title,
+                    item.Description,
+                    item.CategoryName,
+                    item.Author,
+                    item.Condition,
+                    item.Price,
+                    item.ImageUrl,
+                    item.CreatedAt,
+                    item.IsSold
+                })
+                .ToList();
+
+            return Ok(unsoldBooks);
         }
 
         [HttpGet]
@@ -52,7 +78,8 @@ namespace Bookshelf.Controllers
                 item.Condition,
                 item.Price,
                 item.ImageUrl,
-                item.CreatedAt
+                item.CreatedAt,
+                item.IsSold
             })
             .FirstOrDefault();
 
