@@ -33,5 +33,6 @@ namespace Bookshelf.Models
         public ICollection<Transaction> BuyerTransactions { get; set; }
         public ICollection<Transaction> SellerTransactions { get; set; }
         public ICollection<BookReview> Reviews { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }

@@ -33,6 +33,9 @@ namespace Bookshelf.Data
             modelBuilder.Entity<BookReview>()
                 .HasKey(br => br.ReviewId);
 
+            modelBuilder.Entity<Address>()
+                .HasKey(a => a.AddressId);
+
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Username)
                 .IsUnique();
@@ -87,6 +90,18 @@ namespace Bookshelf.Data
                 .HasOne(br => br.Book)
                 .WithMany(b => b.Reviews)
                 .HasForeignKey(br => br.BookId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Book>()
+                .HasOne(b => b.Seller)
+                .WithMany(u => u.SellingBooks)
+                .HasForeignKey(b => b.SellerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Address>()
+                .HasOne(a => a.User)
+                .WithMany(u => u.Addresses)
+                .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
