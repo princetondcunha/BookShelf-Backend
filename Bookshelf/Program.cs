@@ -6,6 +6,11 @@ DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -16,6 +21,9 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 
 
 var app = builder.Build();
+//cors
+app.UseCors("AllowAll");
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
