@@ -6,14 +6,24 @@ DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<BookshelfDbContext>(options =>
     options.UseSqlServer($"Server={Env.GetString("DB_SERVER")};Database={Env.GetString("DB_DATABASE")};User Id={Env.GetString("DB_USER")};Password={Env.GetString("DB_PASSWORD")};TrustServerCertificate=True;"));
 
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
 
 var app = builder.Build();
+//cors
+app.UseCors("AllowAll");
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -27,6 +37,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+// Use authentication before authorization
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseAuthorization();
 

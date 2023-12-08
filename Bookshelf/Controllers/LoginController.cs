@@ -2,6 +2,11 @@
 using Bookshelf.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Bookshelf.Controllers
 {
@@ -10,57 +15,36 @@ namespace Bookshelf.Controllers
     public class LoginController : ControllerBase
     {
         private readonly BookshelfDbContext _context;
-        public LoginController(BookshelfDbContext context)
+        private readonly IConfiguration _configuration;
+
+        public LoginController(BookshelfDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
-
-        [HttpPost]
-        public IActionResult Authenticate([FromBody] LoginRequest model)
-        {
-            if (IsValidUser(model.Username, model.Password))
-            {
-                return Ok(new { message = "Password accepted" });
-            }
-            else
-            {
-                return Unauthorized(new { message = "Invalid username or password" });
-            }
-        }
-
-        private bool IsValidUser(string username, string password)
-        {
-            // Replace these with your actual static username and password
-            const string validUsername = "exampleuser";
-            const string validPassword = "examplepassword";
-
-            // Check if the provided credentials match the static ones
-            return username == validUsername && password == validPassword;
-        }
-
-        //code for register and login
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest loginRequest)
         {
             try
             {
-                // Validate the request
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
 
-                // Find the user by username
                 var user = _context.Users
                     .SingleOrDefault(u => u.Username == loginRequest.Username);
 
-                // Check if the user exists and verify the password
                 if (user == null || user.Password != loginRequest.Password)
                 {
                     return BadRequest("Invalid username or password.");
                 }
-                return Ok($"Login successful for user: {user.Username}");
+
+                // Generate JWT token
+                var token = GenerateJwtToken(user.Username);
+
+                return Ok(new { Token = token, Username = user.Username});
             }
             catch (Exception ex)
             {
@@ -68,5 +52,25 @@ namespace Bookshelf.Controllers
             }
         }
 
+        private string GenerateJwtToken(string username)
+        {
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Name, username),
+                // Add additional claims if needed
+            };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
 }
