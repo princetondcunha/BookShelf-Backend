@@ -51,6 +51,11 @@ namespace Bookshelf.Controllers
         [HttpGet("getOrders")]
         public IActionResult GetAll(int buyerId)
         {
+            if (buyerId == default(int))
+            {
+                return BadRequest(new { error = "buyerId is required in the query." });
+            }
+
             var data = _context.Transactions
                 .Where(item => item.BuyerId == buyerId)
                 .Select(item => new
