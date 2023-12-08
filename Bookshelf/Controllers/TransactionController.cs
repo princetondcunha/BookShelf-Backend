@@ -24,10 +24,10 @@ namespace Bookshelf.Controllers
             var book = _context.Books
                 .FirstOrDefault(b => b.BookId == newTransaction.BookId);
 
-            Console.WriteLine("TRACE: ", book);
-
             var sellerId = book.SellerId;
+            var TotalAmount = book.Price;
             newTransaction.SellerId = sellerId;
+            newTransaction.TotalAmount = TotalAmount;
             _context.Transactions.Add(newTransaction);
             book.IsSold = true;
             _context.SaveChanges();
