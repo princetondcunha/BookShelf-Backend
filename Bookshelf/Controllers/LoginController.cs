@@ -44,7 +44,8 @@ namespace Bookshelf.Controllers
                 // Generate JWT token
                 var token = GenerateJwtToken(user.Username);
 
-                return Ok(new { Token = token, Username = user.Username});
+                return Ok(new { Token = token, Username = user.Username, UserId = user.UserId, Email = user.Email
+                });
             }
             catch (Exception ex)
             {
