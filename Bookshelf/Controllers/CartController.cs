@@ -41,6 +41,12 @@ namespace Bookshelf.Controllers
         [HttpGet("getItem")]
         public IActionResult GetAll(int userId)
         {
+
+            if (userId == default(int))
+            {
+                return BadRequest(new { error = "UserId is required in the query." });
+            }
+
             var data = _context.Carts
                 .Where(item => item.UserId == userId)
                 .Select(item => new

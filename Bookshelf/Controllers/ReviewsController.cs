@@ -21,6 +21,12 @@ namespace Bookshelf.Controllers
         [HttpGet]
         public IActionResult GetAll(int bookId)
         {
+
+            if (bookId == default(int))
+            {
+                return BadRequest(new { error = "BookId is required in the query." });
+            }
+
             var data = _context.BookReviews
                 .Where(item => item.BookId == bookId)
                 .Select(item => new
