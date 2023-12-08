@@ -60,5 +60,28 @@ namespace Bookshelf.Controllers
 
             return Ok(data);
         }
+
+        [HttpDelete("deleteItem")]
+        public IActionResult DeleteCartItem(int cartItemId)
+        {
+            try
+            {
+                var cartItem = _context.Carts.Find(cartItemId);
+
+                if (cartItem == null)
+                {
+                    return NotFound(new { error = $"CartItem with ID {cartItemId} not found." });
+                }
+
+                _context.Carts.Remove(cartItem);
+                _context.SaveChanges();
+
+                return NoContent(); // 204 No Content
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "An error occurred while deleting the item from the cart." });
+            }
+        }
     }
 }
