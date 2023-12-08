@@ -9,25 +9,33 @@ namespace Bookshelf.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Title is required")]
         [MaxLength(255)]
         public string Title { get; set; }
+
+        [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "Author is required")]
         [MaxLength(100)]
         public string Author { get; set; }
 
+        [Required(ErrorMessage = "Condition is required")]
         [MaxLength(50)]
         public string Condition { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "CategoryName is required")]
         [MaxLength(50)]
         public string CategoryName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Price is required")]
         [Column(TypeName = "decimal(10, 2)")]
         public decimal Price { get; set; }
+
+        [Required(ErrorMessage = "SellerId is required")]
         public int SellerId { get; set; }
+
+        [Required(ErrorMessage = "ImageUrl is required")]
         public string ImageUrl { get; set; }
         public bool IsSold { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

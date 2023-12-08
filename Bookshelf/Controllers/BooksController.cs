@@ -63,29 +63,34 @@ namespace Bookshelf.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int bookId)
+        public IActionResult Get(int bookId = 0)
         {
+            IQueryable<Book> query = _context.Books;
 
-            var data = _context.Books
-            .Where(item => item.BookId == bookId)
-            .Select(item => new
+            if (bookId != 0)
             {
-                item.BookId,
-                item.Title,
-                item.Description,
-                item.CategoryName,
-                item.Author,
-                item.Condition,
-                item.Price,
-                item.ImageUrl,
-                item.CreatedAt,
-                item.IsSold
-            })
-            .FirstOrDefault();
+                query = query.Where(item => item.BookId == bookId);
+            }
 
-            if (data == null)
+            var data = query
+                .Select(item => new
+                {
+                    item.BookId,
+                    item.Title,
+                    item.Description,
+                    item.CategoryName,
+                    item.Author,
+                    item.Condition,
+                    item.Price,
+                    item.ImageUrl,
+                    item.CreatedAt,
+                    item.IsSold
+                })
+                .ToList();
+
+            if (!data.Any())
             {
-                return NotFound();
+                return NotFound(new { Message = "Invalid BookId. The specified BookId does not exist." });
             }
 
             return Ok(data);
