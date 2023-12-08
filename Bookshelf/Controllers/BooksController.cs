@@ -90,7 +90,7 @@ namespace Bookshelf.Controllers
 
             if (!data.Any())
             {
-                return NotFound(new { Message = "Invalid BookId. The specified BookId does not exist." });
+                return NotFound(new { error = "Invalid BookId. The specified BookId does not exist." });
             }
 
             return Ok(data);
