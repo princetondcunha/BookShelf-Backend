@@ -6,6 +6,8 @@
 /bin/
 **/obj/
 /out/
+Bookshelf/obj/
+
 
 # .NET Core
 project.lock.json
