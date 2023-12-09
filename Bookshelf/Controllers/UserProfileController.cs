@@ -1,11 +1,13 @@
 ﻿using Bookshelf.Data;
 using Bookshelf.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Bookshelf.Controllers
 {
+    [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserProfileController : ControllerBase
