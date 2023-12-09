@@ -42,7 +42,7 @@ namespace Bookshelf.Controllers
         }
 
         [HttpGet("activeListing")]
-        public IActionResult GetUnsoldBooks()
+        public IActionResult GetUnsoldBooks(int userId)
         {
             var unsoldBooks = _context.Books
                 .Where(book => !book.IsSold &&
