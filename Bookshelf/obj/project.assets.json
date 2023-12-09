@@ -7431,24 +7431,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\princ\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\mehta\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\princ\\SMU_Assignments\\5510\\FinalProject\\BookShelf-Backend\\Bookshelf\\Bookshelf.csproj",
+      "projectUniqueName": "C:\\Users\\mehta\\Desktop\\smu\\programming\\git assignment\\Bookshelf\\BookShelf-Backend\\Bookshelf\\Bookshelf.csproj",
       "projectName": "Bookshelf",
-      "projectPath": "C:\\Users\\princ\\SMU_Assignments\\5510\\FinalProject\\BookShelf-Backend\\Bookshelf\\Bookshelf.csproj",
-      "packagesPath": "C:\\Users\\princ\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\princ\\SMU_Assignments\\5510\\FinalProject\\BookShelf-Backend\\Bookshelf\\obj\\",
+      "projectPath": "C:\\Users\\mehta\\Desktop\\smu\\programming\\git assignment\\Bookshelf\\BookShelf-Backend\\Bookshelf\\Bookshelf.csproj",
+      "packagesPath": "C:\\Users\\mehta\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mehta\\Desktop\\smu\\programming\\git assignment\\Bookshelf\\BookShelf-Backend\\Bookshelf\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\princ\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\mehta\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
