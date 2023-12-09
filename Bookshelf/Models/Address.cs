@@ -25,7 +25,7 @@ namespace Bookshelf.Models
         public string State { get; set; }
 
         [Required]
-        [StringLength(9)]
+        [StringLength(10)]
         public string ZipCode { get; set; }
 
         [Required]
