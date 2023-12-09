@@ -19,6 +19,15 @@ namespace Bookshelf.Controllers
         [HttpPost("addItem")]
         public IActionResult AddCartItem([FromBody] Cart newCartItem)
         {
+            var existingCartItem = _context.Carts
+            .FirstOrDefault(item => item.UserId == newCartItem.UserId && item.BookId == newCartItem.BookId);
+
+            if (existingCartItem != null)
+            {
+                // if item is already in the cart
+                return Conflict(new { error = "The item is already in the cart." });
+            }
+
             _context.Carts.Add(newCartItem);
             _context.SaveChanges();
 
