@@ -12,11 +12,15 @@ namespace Bookshelf.Models
         [Required]
         [MaxLength(255)]
         public string Title { get; set; }
+
+        [Required]
         public string Description { get; set; }
 
+        [Required]
         [MaxLength(100)]
         public string Author { get; set; }
 
+        [Required]
         [MaxLength(50)]
         public string Condition { get; set; }
 
@@ -27,7 +31,11 @@ namespace Bookshelf.Models
         [Required]
         [Column(TypeName = "decimal(10, 2)")]
         public decimal Price { get; set; }
+
+        [Required]
         public int SellerId { get; set; }
+
+        [Required]
         public string ImageUrl { get; set; }
         public bool IsSold { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

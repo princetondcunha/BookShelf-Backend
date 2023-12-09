@@ -12,10 +12,12 @@ namespace Bookshelf.Models
         
         [Required]
         [MaxLength(20)]
+        [Alphabetic]
         public string FirstName { get; set; }
 
         [Required]
         [MaxLength(20)]
+        [Alphabetic]
         public string LastName { get; set; }
 
         [Required]

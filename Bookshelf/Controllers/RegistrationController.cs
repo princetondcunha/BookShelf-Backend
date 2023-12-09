@@ -2,6 +2,7 @@
 using Bookshelf.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bookshelf.Controllers
 {
@@ -24,6 +25,19 @@ namespace Bookshelf.Controllers
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
+                }
+
+                // Additional validation for FirstName and LastName using AlphabeticAttribute
+                var validationResults = new List<ValidationResult>();
+                if (!Validator.TryValidateObject(newUser, new ValidationContext(newUser, null, null), validationResults, true))
+                {
+                    var errorResponse = new
+                    {
+                        error = "Invalid data format.",
+                        status = 400
+                    };
+
+                    return BadRequest(errorResponse);
                 }
 
                 // Check if the username or email already exists
