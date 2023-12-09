@@ -66,6 +66,7 @@ namespace Bookshelf.Controllers
                     item.BuyerId,
                     item.BookId,
                     item.TransactionDate,
+                    BookTitle = item.Book.Title,
                     TotalAmount = item.TotalAmount+item.DeliveryCharge+item.PlatformFee
                 })
                 .ToList();
