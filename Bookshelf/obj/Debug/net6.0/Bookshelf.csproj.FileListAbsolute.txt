@@ -87,3 +87,4 @@ C:\Users\princ\SMU_Assignments\5510\FinalProject\BookShelf-Backend\Bookshelf\obj
 C:\Users\princ\SMU_Assignments\5510\FinalProject\BookShelf-Backend\Bookshelf\obj\Debug\net6.0\Bookshelf.csproj.CopyComplete
 C:\Users\princ\SMU_Assignments\5510\FinalProject\BookShelf-Backend\Bookshelf\bin\Debug\net6.0\DotNetEnv.dll
 C:\Users\princ\SMU_Assignments\5510\FinalProject\BookShelf-Backend\Bookshelf\bin\Debug\net6.0\Sprache.dll
+C:\Users\princ\SMU_Assignments\5510\FinalProject\BookShelf-Backend\Bookshelf\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
