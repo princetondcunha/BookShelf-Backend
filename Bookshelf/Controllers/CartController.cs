@@ -66,7 +66,8 @@ namespace Bookshelf.Controllers
                             cartItem.UserId,
                             cartItem.BookId,
                             cartItem.AddedAt,
-                            BookTitle = book.Title
+                            BookTitle = book.Title,
+                            BookPrice = book.Price
                         })
                     .ToList();
 
