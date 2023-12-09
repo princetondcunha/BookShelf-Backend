@@ -45,7 +45,8 @@ namespace Bookshelf.Controllers
         public IActionResult GetUnsoldBooks()
         {
             var unsoldBooks = _context.Books
-                .Where(book => !book.IsSold)
+                .Where(book => !book.IsSold &&
+                !_context.Carts.Any(cartItem => cartItem.UserId == userId && cartItem.BookId == book.BookId))
                 .Select(item => new
                 {
                     item.BookId,
