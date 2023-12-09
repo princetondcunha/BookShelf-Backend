@@ -10,6 +10,7 @@ namespace Bookshelf.Data
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<BookReview> BookReviews { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         public BookshelfDbContext(DbContextOptions options) : base(options)
         {
