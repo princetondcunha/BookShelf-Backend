@@ -29,7 +29,7 @@ namespace Bookshelf.Models
         public string ZipCode { get; set; }
 
         [Required]
-        [RegularExpression("^(Canada|USA)$", ErrorMessage = "Country should be Canada or US.")]
+        [RegularExpression("^(Canada|US)$", ErrorMessage = "Country should be Canada or US.")]
         public string Country { get; set; }
 
         [Required]
